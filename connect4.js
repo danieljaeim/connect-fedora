@@ -1,18 +1,12 @@
 /** Connect Four
- *
- * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
- * column until a player gets four-in-a-row (horiz, vert, or diag) or until
- * board fills (tie)
- * 
- * counter that increments with each turn
- * whether or not the counter is even or odd will determine the color of piece
- * 
- * 
+ *  Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
+ *  column until a player gets four-in-a-row (horiz, vert, or diag) or until
+ *  board fills (tie)
  */
 
 const WIDTH = 7;
 const HEIGHT = 6;
-let currPlayer = 1; // active player: 1 or 2
+let currPlayer = 1; // active player: 1 or 2 - red is 1, black is 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
 let turnCounter = 0;
 
@@ -21,7 +15,7 @@ let turnCounter = 0;
 
 
 /** makeBoard: create in-JS board structure:
- *    board = array of rows, each row is array of cells  (board[y][x])
+ *  generate a matrix of null values - the board at start of game
  */
 function makeBoard() {
   board = new Array(HEIGHT).fill(null);
@@ -105,7 +99,7 @@ function placeInTable(y, x) {
 
 /** endGame: announce game end */
 function endGame(msg) {
-  // TODO: pop up alert message
+  alert(msg);
 }
 
 
@@ -115,9 +109,16 @@ function fillSpot(y, x) {
   board[y][x] = currPlayer;
 }
 
+
+/********************************************************************************/
+
+
 function changePlayer() {
   currPlayer = currPlayer === 1 ? 2 : 1;
 }
+
+
+/********************************************************************************/
 
 
 /** handleClick: handle click of column top to play piece */
@@ -130,6 +131,9 @@ function handleClick(evt) {
   if (y === null) {
     return;
   }
+
+  turnCounter++;
+  if (turnCounter === WIDTH * HEIGHT) { endGame("Tie!") }
 
   // place piece in board and add to HTML table
   placeInTable(y, x);
