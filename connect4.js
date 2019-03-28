@@ -4,8 +4,8 @@
  *  board fills (tie)
  */
 
-const WIDTH = 7;
-const HEIGHT = 6;
+const WIDTH = 7; // amount of values in each array
+const HEIGHT = 6; // really just the number of arrays
 let currPlayer = 1; // active player: 1 or 2 - red is 1, black is 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
 let turnCounter = 0;
@@ -15,7 +15,7 @@ let turnCounter = 0;
 
 
 /** makeBoard: create in-JS board structure:
- *  generate a matrix of null values - the board at start of game
+ *  generate a matrix of null values - this is the board at start of game
  */
 function makeBoard() {
   board = new Array(HEIGHT).fill(null);
@@ -85,8 +85,9 @@ function findSpotForCol(x) {
 
 /** placeInTable: update DOM to place piece into HTML board */
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
+  // finds appropriate element
   let targetCell = document.getElementById(`${y}-${x}`);
+  // create piece, add appropriate classes, append to target cell
   let piece = document.createElement("div");
   piece.classList.add("piece");
   piece.classList.add(`p${currPlayer}`);
@@ -105,6 +106,7 @@ function endGame(msg) {
 
 /********************************************************************************/
 
+// set appropriate matrix value
 function fillSpot(y, x) {
   board[y][x] = currPlayer;
 }
@@ -112,7 +114,7 @@ function fillSpot(y, x) {
 
 /********************************************************************************/
 
-
+// change current player variable
 function changePlayer() {
   currPlayer = currPlayer === 1 ? 2 : 1;
 }
@@ -131,28 +133,19 @@ function handleClick(evt) {
   if (y === null) {
     return;
   }
-
+  // increment turn counter, check if board is full
   turnCounter++;
   if (turnCounter === WIDTH * HEIGHT) { endGame("Tie!") }
-
   // place piece in board and add to HTML table
   placeInTable(y, x);
   // change appropriate value in matrix from null to player number
   fillSpot(y, x);
-  //
+  // change player on each turn
   changePlayer();
-
-
-  // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
-
   // check for win
   if (checkForWin()) {
     return endGame(`Player ${currPlayer} won!`);
   }
-
-  // switch players
-  // TODO: switch currPlayer 1 <-> 2
 }
 
 
@@ -174,19 +167,18 @@ function checkForWin() {
             board[y][x] === currPlayer
     );
   }
-
-
-/********************************************************************************/
-
-
-  // TODO: read and understand this code. Add comments to help you.
+  // using a nested loop to access every value in the matrix
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
+      // increment x
       let horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
+      // increment y
       let vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      // increment x, increment y
       let diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
+      // decrement x, increment y 
       let diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
-
+      // pass every possible 4 piece combo to _win - if any return true, checkForWin returns true
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
@@ -197,6 +189,6 @@ function checkForWin() {
 
 /********************************************************************************/
 
-
+// make boards
 makeBoard();
 makeHtmlBoard();
