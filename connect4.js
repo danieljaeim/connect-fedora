@@ -3,6 +3,11 @@
  * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
  * column until a player gets four-in-a-row (horiz, vert, or diag) or until
  * board fills (tie)
+ * 
+ * counter that increments with each turn
+ * whether or not the counter is even or odd will determine the color of piece
+ * 
+ * 
  */
 
 var WIDTH = 7;
@@ -14,30 +19,32 @@ var board = []; // array of rows, each row is array of cells  (board[y][x])
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
-
 function makeBoard() {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
+  let board = new Array(HEIGHT).fill(null);
+  let row = new Array(WIDTH).fill(null);
+  board.forEach((val, i) => {
+    board[i] = row;
+  });
+	return board;
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
-
 function makeHtmlBoard() {
-  // TODO: get "board" variable from the item in HTML w/ID of "board"
-
-  // TODO: add comment for this code
+  let board = document.querySelector("#board");
+  // assemble HTML for top row
   var top = document.createElement("tr");
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
-
+  // add data cells to top row
   for (var x = 0; x < WIDTH; x++) {
     var headCell = document.createElement("td");
     headCell.setAttribute("id", x);
     top.append(headCell);
   }
+  // append top row to board
   board.append(top);
-
-  // TODO: add comment for this code
-  for (var y = 0; y < HEIGHT; y++) {
+  // assemble and append the rest of the rows
+  for (var y = 0; y < HEIGHT - 1; y++) {
     const row = document.createElement("tr");
     for (var x = 0; x < WIDTH; x++) {
       const cell = document.createElement("td");
@@ -68,11 +75,9 @@ function endGame(msg) {
 }
 
 /** handleClick: handle click of column top to play piece */
-
 function handleClick(evt) {
   // get x from ID of clicked cell
   var x = +evt.target.id;
-
   // get next spot in column (if none, ignore click)
   var y = findSpotForCol(x);
   if (y === null) {
@@ -114,7 +119,6 @@ function checkForWin() {
   }
 
   // TODO: read and understand this code. Add comments to help you.
-
   for (var y = 0; y < HEIGHT; y++) {
     for (var x = 0; x < WIDTH; x++) {
       var horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
