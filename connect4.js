@@ -12,9 +12,12 @@
 
 var WIDTH = 7;
 var HEIGHT = 6;
-
 var currPlayer = 1; // active player: 1 or 2
 var board = []; // array of rows, each row is array of cells  (board[y][x])
+
+
+/********************************************************************************/
+
 
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
@@ -28,6 +31,10 @@ function makeBoard() {
 	return board;
 }
 
+
+/********************************************************************************/
+
+
 /** makeHtmlBoard: make HTML table and row of column tops. */
 function makeHtmlBoard() {
   let board = document.querySelector("#board");
@@ -36,6 +43,7 @@ function makeHtmlBoard() {
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
   // add data cells to top row
+  // 0 1 2 3 4 5 6
   for (var x = 0; x < WIDTH; x++) {
     var headCell = document.createElement("td");
     headCell.setAttribute("id", x);
@@ -44,7 +52,7 @@ function makeHtmlBoard() {
   // append top row to board
   board.append(top);
   // assemble and append the rest of the rows
-  for (var y = 0; y < HEIGHT - 1; y++) {
+  for (var y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
     for (var x = 0; x < WIDTH; x++) {
       const cell = document.createElement("td");
@@ -53,33 +61,53 @@ function makeHtmlBoard() {
     }
     board.append(row);
   }
+  // Board created!
 }
+
+
+/********************************************************************************/
+
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
-
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
-  return 0;
+  // start from bottom row up, check each spot
+  for (let i = board.length - 1; i >= 0; i--) {
+    if (board[i][x] === null) { return i; }
+  }
+  // if column is full, return null
+  return null;
 }
 
-/** placeInTable: update DOM to place piece into HTML board */
 
+/********************************************************************************/
+
+
+/** placeInTable: update DOM to place piece into HTML board */
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
 }
 
-/** endGame: announce game end */
 
+/********************************************************************************/
+
+
+/** endGame: announce game end */
 function endGame(msg) {
   // TODO: pop up alert message
 }
+
+
+/********************************************************************************/
+
 
 /** handleClick: handle click of column top to play piece */
 function handleClick(evt) {
   // get x from ID of clicked cell
   var x = +evt.target.id;
+  console.log(x)
   // get next spot in column (if none, ignore click)
   var y = findSpotForCol(x);
+  // if we try to click on a row that's completely full, nothing happens
   if (y === null) {
     return;
   }
@@ -100,14 +128,16 @@ function handleClick(evt) {
   // TODO: switch currPlayer 1 <-> 2
 }
 
-/** checkForWin: check board cell-by-cell for "does a win start here?" */
 
+/********************************************************************************/
+
+
+/** checkForWin: check board cell-by-cell for "does a win start here?" */
 function checkForWin() {
   function _win(cells) {
     // Check four cells to see if they're all color of current player
     //  - cells: list of four (y, x) cells
     //  - returns true if all are legal coordinates & all match currPlayer
-
     return cells.every(
         ([y, x]) =>
             y >= 0 &&
@@ -117,6 +147,10 @@ function checkForWin() {
             board[y][x] === currPlayer
     );
   }
+
+
+/********************************************************************************/
+
 
   // TODO: read and understand this code. Add comments to help you.
   for (var y = 0; y < HEIGHT; y++) {
@@ -132,6 +166,10 @@ function checkForWin() {
     }
   }
 }
+
+
+/********************************************************************************/
+
 
 makeBoard();
 makeHtmlBoard();
