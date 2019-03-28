@@ -1,12 +1,14 @@
 
-html {
+* {
   box-sizing: border-box;
+}
+
+html {
   margin: 0;
   padding: 0;
 }
 
 body {
-  min-width: 600px;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -18,22 +20,19 @@ body {
 }
 
 #game {
-  min-width: 720px;
-  padding: 40px 30px;
+  min-width: 570px;
+  padding: 30px 30px;
   background-color: #fff;
   border: 8px solid black;
   border-radius: 40px;
+
 }
 
-/* game board table */
 td {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border: solid 2px #000;
-}
-
-#column-top {
-  margin-bottom: 10px;
+  border-radius: 10px;
 }
 
 #column-top > td {
