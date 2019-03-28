@@ -11,13 +11,25 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url("http://bethellonedell.com/wp-content/uploads/blue-gradient-background.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#game {
+  min-width: 720px;
+  padding: 40px 30px;
+  background-color: #fff;
+  border: 8px solid black;
+  border-radius: 40px;
 }
 
 /* game board table */
 td {
   width: 80px;
   height: 80px;
-  border: solid 1px black;
+  border: solid 2px #000;
 }
 
 #column-top {
@@ -30,17 +42,27 @@ td {
   border-width: 5px;
 }
 
-/* pieces are div within game table cells: draw as colored circles */
 
+
+/* pieces are div within game table cells: draw as colored circles */
 .piece {
   /* TODO: make into circles */
   margin: 5px;
   width: 80%;
   height: 80%;
+  /* background-color: #000; */
+  border-radius: 50%;
+  z-index: 1;
 }
+
+
 
 /* TODO: make pieces red/blue,  depending on player 1/2 piece */
 
-/* column-top is table row of clickable areas for each column */
+.p1 {
+  background-color: red;
+}
 
-/* TODO: make column-top row lighter and provide hover effect */
+.p2 {
+  background-color: black;
+}
