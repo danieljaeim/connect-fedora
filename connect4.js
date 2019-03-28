@@ -41,6 +41,13 @@ function makeHtmlBoard() {
   // assemble HTML for top row
   var top = document.createElement("tr");
   top.setAttribute("id", "column-top");
+  // mouseover and mouseout for button UI functionality
+  top.addEventListener("mouseover", function(e) {
+    e.target.style.backgroundColor = "#fff";
+  });
+  top.addEventListener("mouseout", function(e) {
+    e.target.style.backgroundColor = "#c1d9ff";
+  });
   top.addEventListener("click", handleClick);
   // add data cells to top row
   // 0 1 2 3 4 5 6
@@ -102,9 +109,9 @@ function endGame(msg) {
 
 /** handleClick: handle click of column top to play piece */
 function handleClick(evt) {
+  console.log(evt.target);
   // get x from ID of clicked cell
   var x = +evt.target.id;
-  console.log(x)
   // get next spot in column (if none, ignore click)
   var y = findSpotForCol(x);
   // if we try to click on a row that's completely full, nothing happens

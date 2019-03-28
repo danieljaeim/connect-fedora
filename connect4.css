@@ -1,5 +1,9 @@
 
-
+html {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   min-width: 600px;
@@ -17,7 +21,13 @@ td {
 }
 
 #column-top {
-  background-color: blue;
+  margin-bottom: 10px;
+}
+
+#column-top > td {
+  background-color: #c1d9ff;
+  border-radius: 50%;
+  border-width: 5px;
 }
 
 /* pieces are div within game table cells: draw as colored circles */
