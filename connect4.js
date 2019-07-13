@@ -58,6 +58,7 @@ function makeHtmlBoard() {
     for (let x = 0; x < WIDTH; x++) {
       const cell = document.createElement("td");
       cell.setAttribute("id", `${y}-${x}`);
+      cell.classList.add('cells');
       row.append(cell);
     }
     board.append(row);
@@ -87,6 +88,7 @@ function findSpotForCol(x) {
 function placeInTable(y, x) {
   // finds appropriate element
   let targetCell = document.getElementById(`${y}-${x}`);
+  targetCell.classList.add('cells');
   // create piece, add appropriate classes, append to target cell
   let piece = document.createElement("div");
   piece.classList.add("piece");
@@ -99,9 +101,7 @@ function placeInTable(y, x) {
 
 
 /** endGame: announce game end */
-function endGame(msg) {
-  alert(msg);
-}
+const endGame = alert;
 
 
 /********************************************************************************/
@@ -141,12 +141,29 @@ function handleClick(evt) {
   // change appropriate value in matrix from null to player number
   fillSpot(y, x);
   // change player on each turn
-  changePlayer();
   // check for win
+  
   if (checkForWin()) {
-    return endGame(`Player ${currPlayer} won!`);
-  }
+    if (currPlayer === 1) {
+      setTimeout(function() {
+        setTimeout(function() {
+          resetGame(); 
+        }, 20)
+        endGame('The Red Fedoras Prevail! Blue Fedoras, prepare to enter my cringe compilation') 
+      }, 200)
+    } else {
+      setTimeout(function() {
+        setTimeout(function() {
+          resetGame(); 
+        }, 30)
+        endGame('The Blue Fedoras Prevail! Red Fedoras, prepare to enter my cringe compilation') 
+      }, 302)
+    }
+  } 
+  changePlayer();
+  //if (checkForWin) 
 }
+
 
 
 /********************************************************************************/
@@ -180,15 +197,55 @@ function checkForWin() {
       let diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
       // pass every possible 4 piece combo to _win - if any return true, checkForWin returns true
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
-        return true;
+        return true; 
       }
     }
   }
 }
 
+function resetGame() {
+  makeBoard(); 
+  currPlayer = 1; 
+  turnCounter = 0; 
+  let cells = [...document.getElementsByClassName('cells')];
+  cells.forEach((cell) => {
+    if (cell.firstChild) {
+      cell.removeChild(cell.firstChild);
+    }
+  });
+}
 
 /********************************************************************************/
+
+function winningMoves(board) {
+
+  let possibleY = []; 
+
+  for (let i = 0; i < WIDTH; i++) {
+    let curYMove = findSpotForCol(i);
+    if (curYMove !== null) {
+      possibleY.push(curYMove);
+    }
+  }
+  
+  let winningMoves = []; 
+  for (let j = 0; j < possibleY.length ;j++) {
+    let curMove = possibleY[j];
+    let copyBoard = JSON.parse(JSON.stringify(board));
+    if (checkForWin(curMove)) {
+
+    }
+
+    
+  }
+
+}
+
+/********************************************************************************/
+
 
 // make boards
 makeBoard();
 makeHtmlBoard();
+
+

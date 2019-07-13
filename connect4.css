@@ -13,10 +13,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("http://bethellonedell.com/wp-content/uploads/blue-gradient-background.png");
   background-position: center;
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
 }
 
 #game {
@@ -41,27 +40,42 @@ td {
   border-width: 5px;
 }
 
-
-
+@keyframes drop {
+  0% {
+    bottom: 150px;
+    opacity: 0;
+  }
+  100% {
+    bottom: 0px;
+    opacity: 1;
+  }
+}
 /* pieces are div within game table cells: draw as colored circles */
 .piece {
   /* TODO: make into circles */
   margin: 5px;
   width: 80%;
   height: 80%;
-  /* background-color: #000; */
   border-radius: 50%;
   z-index: 1;
+
+  animation-name: drop; 
+  animation-duration: 300ms;
 }
 
 
 
 /* TODO: make pieces red/blue,  depending on player 1/2 piece */
-
 .p1 {
-  background-color: red;
+  background-image:url(images/fedora.png); 
+  background-size: contain; 
+  background-repeat: no-repeat; 
+  background-position: center; 
 }
 
 .p2 {
-  background-color: black;
+  background-image:url(images/fedora2.jpeg);
+  background-size: contain; 
+  background-repeat: no-repeat; 
+  background-position: center; 
 }
